@@ -2,8 +2,13 @@ import { useMemo, useRef, useState } from "react";
 import {
   MaterialReactTable,
   useMaterialReactTable,
+<<<<<<< HEAD
 } from "@glebcha/material-react-table";
 import { Box, Button, CircularProgress } from "@mui/material";
+=======
+} from "material-react-table";
+import { Box, Button } from "@mui/material";
+>>>>>>> e39f402 ([FR-02] User management page with API integration)
 import CheckIcon from "@mui/icons-material/Check";
 
 import { createUserTableColumns } from "./userTableColumns";
@@ -24,7 +29,10 @@ export default function UsersTable({
   const [confirmation, setConfirmation] = useState(null);
   const [roleChooserOpen, setRoleChooserOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState("");
+<<<<<<< HEAD
   const [pendingAction, setPendingAction] = useState(null);
+=======
+>>>>>>> e39f402 ([FR-02] User management page with API integration)
   const resolveRole = useRef(null);
 
   const askForConfirmation = (message) =>
@@ -81,6 +89,7 @@ export default function UsersTable({
     positionActionsColumn: "last",
     positionGlobalFilter: "right",
     icons: {
+<<<<<<< HEAD
       SaveIcon: (props) =>
         pendingAction ? (
           <CircularProgress size={18} color="inherit" />
@@ -90,6 +99,14 @@ export default function UsersTable({
             sx={{ ...props.sx, color: "success.main" }}
           />
         ),
+=======
+      SaveIcon: (props) => (
+        <CheckIcon
+          {...props}
+          sx={{ ...props.sx, color: "success.main" }}
+        />
+      ),
+>>>>>>> e39f402 ([FR-02] User management page with API integration)
     },
     displayColumnDefOptions: {
       "mrt-row-actions": {
@@ -125,7 +142,10 @@ export default function UsersTable({
           }
 
           try {
+<<<<<<< HEAD
             setPendingAction(`row-${row.original.id}`);
+=======
+>>>>>>> e39f402 ([FR-02] User management page with API integration)
             if (roleChanged) {
               await onRoleChange({ id: row.original.id, role: values.role });
             }
@@ -142,8 +162,11 @@ export default function UsersTable({
             notify.error(
               error.response?.data?.message || "Failed to update user.",
             );
+<<<<<<< HEAD
           } finally {
             setPendingAction(null);
+=======
+>>>>>>> e39f402 ([FR-02] User management page with API integration)
           }
         }
       : undefined,
@@ -223,6 +246,7 @@ export default function UsersTable({
                 .getSelectedRowModel()
                 .rows.map((row) => row.original.id);
 
+<<<<<<< HEAD
               setPendingAction("bulk-role");
               try {
                 await onBulkRoleChange({ ids, role });
@@ -237,6 +261,17 @@ export default function UsersTable({
             startIcon={pendingAction === "bulk-role" ? <CircularProgress size={16} /> : null}
           >
             {pendingAction === "bulk-role" ? "Updating..." : "Change role"}
+=======
+              onBulkRoleChange({ ids, role })
+                .then(() => notify.success("Roles updated successfully."))
+                .catch((error) => {
+                  console.error("Failed to update roles:", error);
+                  notify.error("Failed to update roles.");
+                });
+            }}
+          >
+            Change role
+>>>>>>> e39f402 ([FR-02] User management page with API integration)
           </Button>
           <Button
             size="small"
@@ -251,15 +286,22 @@ export default function UsersTable({
                 .getSelectedRowModel()
                 .rows.map((row) => row.original.id);
 
+<<<<<<< HEAD
               setPendingAction("bulk-activate");
               try {
                 await onBulkStatusChange({ ids, isActive: true });
                 notify.success("Users activated successfully.");
               } catch (error) {
+=======
+              onBulkStatusChange({ ids, isActive: true })
+                .then(() => notify.success("Users activated successfully."))
+                .catch((error) => {
+>>>>>>> e39f402 ([FR-02] User management page with API integration)
                   console.error("Failed to activate users:", error);
                   notify.error(
                     error.response?.data?.message || "Failed to activate users.",
                   );
+<<<<<<< HEAD
               } finally {
                 setPendingAction(null);
               }
@@ -267,6 +309,12 @@ export default function UsersTable({
             startIcon={pendingAction === "bulk-activate" ? <CircularProgress size={16} /> : null}
           >
             {pendingAction === "bulk-activate" ? "Activating..." : "Activate"}
+=======
+                });
+            }}
+          >
+            Activate
+>>>>>>> e39f402 ([FR-02] User management page with API integration)
           </Button>
           <Button
             size="small"
@@ -281,15 +329,22 @@ export default function UsersTable({
                 .getSelectedRowModel()
                 .rows.map((row) => row.original.id);
 
+<<<<<<< HEAD
               setPendingAction("bulk-deactivate");
               try {
                 await onBulkStatusChange({ ids, isActive: false });
                 notify.success("Users deactivated successfully.");
               } catch (error) {
+=======
+              onBulkStatusChange({ ids, isActive: false })
+                .then(() => notify.success("Users deactivated successfully."))
+                .catch((error) => {
+>>>>>>> e39f402 ([FR-02] User management page with API integration)
                   console.error("Failed to deactivate users:", error);
                   notify.error(
                     error.response?.data?.message || "Failed to deactivate users.",
                   );
+<<<<<<< HEAD
               } finally {
                 setPendingAction(null);
               }
@@ -297,6 +352,12 @@ export default function UsersTable({
             startIcon={pendingAction === "bulk-deactivate" ? <CircularProgress size={16} /> : null}
           >
             {pendingAction === "bulk-deactivate" ? "Deactivating..." : "Deactivate"}
+=======
+                });
+            }}
+          >
+            Deactivate
+>>>>>>> e39f402 ([FR-02] User management page with API integration)
           </Button>
         </Box>
       ) : null,

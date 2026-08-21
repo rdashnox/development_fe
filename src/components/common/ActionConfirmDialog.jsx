@@ -17,6 +17,7 @@ export default function ActionConfirmDialog({
   isLoading = false,
 }) {
   return (
+<<<<<<< HEAD
     <Dialog
       open={open}
       onClose={isLoading ? undefined : onCancel}
@@ -24,6 +25,9 @@ export default function ActionConfirmDialog({
       maxWidth="xs"
       fullWidth
     >
+=======
+    <Dialog open={open} onClose={isLoading ? undefined : onCancel} maxWidth="xs" fullWidth>
+>>>>>>> e39f402 ([FR-02] User management page with API integration)
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{message}</DialogContent>
       <DialogActions>
