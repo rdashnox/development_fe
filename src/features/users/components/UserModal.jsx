@@ -144,9 +144,13 @@ export default function UserModal({
           defaultValues={defaultValues}
           onSubmit={handleSubmit}
 <<<<<<< HEAD
+<<<<<<< HEAD
           onInvalid={() => setIsSaving(false)}
 =======
 >>>>>>> e39f402 ([FR-02] User management page with API integration)
+=======
+          onInvalid={() => setIsSaving(false)}
+>>>>>>> 9aa54a5 ([FR-02] Loading indicators on UserTable, UserModal submit)
         />
       </DialogContent>
 
@@ -182,15 +186,21 @@ export default function UserModal({
           <>
             {canCreate && (
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9aa54a5 ([FR-02] Loading indicators on UserTable, UserModal submit)
               <Button
                 onClick={handleSubmitButtonPressed}
                 variant="contained"
                 disabled={isSaving}
                 startIcon={isSaving ? <CircularProgress size={20} /> : null}
               >
+<<<<<<< HEAD
 =======
               <Button onClick={handleSubmitButtonPressed} variant="contained">
 >>>>>>> e39f402 ([FR-02] User management page with API integration)
+=======
+>>>>>>> 9aa54a5 ([FR-02] Loading indicators on UserTable, UserModal submit)
                 Submit
               </Button>
             )}

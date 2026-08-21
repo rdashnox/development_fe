@@ -30,9 +30,13 @@ export default function UserForm({
   defaultValues = {},
   onSubmit,
 <<<<<<< HEAD
+<<<<<<< HEAD
   onInvalid,
 =======
 >>>>>>> e39f402 ([FR-02] User management page with API integration)
+=======
+  onInvalid,
+>>>>>>> 9aa54a5 ([FR-02] Loading indicators on UserTable, UserModal submit)
   formId = "user-form",
 }) {
   const { getFieldRule } = getUserFormPermissions(role, mode);
@@ -70,10 +74,14 @@ export default function UserForm({
       component="form"
       id={formId}
 <<<<<<< HEAD
+<<<<<<< HEAD
       onSubmit={handleSubmit(handleSubmitData, onInvalid)}
 =======
       onSubmit={handleSubmit(handleSubmitData)}
 >>>>>>> e39f402 ([FR-02] User management page with API integration)
+=======
+      onSubmit={handleSubmit(handleSubmitData, onInvalid)}
+>>>>>>> 9aa54a5 ([FR-02] Loading indicators on UserTable, UserModal submit)
       spacing={2}
     >
       {visibleFields.map((field) => {
