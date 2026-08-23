@@ -12,6 +12,7 @@ import { Link, useLocation } from "react-router-dom";
 const menuItems = [
   { label: "Dashboard", path: "/dashboard", icon: <DashboardIcon />, roles: ["administrator", "internship_coordinator", "faculty_adviser", "student", "hte_supervisor"] },
   { label: "Internships", path: "/internships", icon: <AssignmentIcon />, roles: ["administrator", "internship_coordinator", "faculty_adviser"] },
+  { label: "Status Tracking", path: "/status", icon: <AssignmentIcon />, roles: ["administrator", "internship_coordinator", "faculty_adviser"] },
   { label: "Students", path: "/students", icon: <PeopleIcon />, roles: ["administrator", "internship_coordinator"] },
   { label: "Users", path: "/users", icon: <PeopleIcon />, roles: ["administrator"] },
   { label: "Companies", path: "/companies", icon: <BusinessIcon />, roles: ["administrator", "internship_coordinator"] },

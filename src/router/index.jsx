@@ -10,6 +10,7 @@ import ResetPasswordPage from "../pages/ResetPasswordPage";
 import StudentManagementPage from "../pages/StudentManagementPage";
 import HTEManagementPage from "../pages/HTEManagementPage";
 import InternshipManagementPage from "../pages/InternshipManagementPage";
+import StatusTrackingPage from "../pages/StatusTrackingPage";
 import AttendanceManagementPage from "../pages/AttendanceManagementPage";
 import UnderMaintenance from "../pages/UnderMaintenance";
 
@@ -45,6 +46,7 @@ export default function AppRouter() {
           <Route path="/students" element={<StudentManagementPage />} />
           <Route path="/companies" element={<HTEManagementPage />} />
           <Route path="/internships" element={<InternshipManagementPage />} />
+          <Route path="/status" element={<StatusTrackingPage />} />
           <Route path="/attendance" element={<AttendanceManagementPage />} />
           <Route path="/users" element={<UnderMaintenance />} />
         </Route>
