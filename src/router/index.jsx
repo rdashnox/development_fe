@@ -7,6 +7,7 @@ import PrivacyPolicy from "../pages/PrivacyPolicy";
 import TermsConditions from "../pages/TermsConditions";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
+import StudentManagementPage from "../pages/StudentManagementPage";
 
 import Dashboard from "../pages/Dashboard";
 import UserManagementPage from "../features/users/UserManagementPage";
@@ -39,6 +40,7 @@ export default function AppRouter() {
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/userandroles" element={<UserManagementPage />} />
+          <Route path="/students" element={<StudentManagementPage />} />
         </Route>
       </Route>
 

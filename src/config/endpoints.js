@@ -16,6 +16,10 @@ const endpoints = {
     role: (id) => `/users/${id}/role`,
     status: (id) => `/users/${id}/status`,
   },
+
+  students: {
+    root: "/students",
+  },
 };
 
 export default Object.freeze(endpoints);
