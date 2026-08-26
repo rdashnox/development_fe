@@ -17,7 +17,13 @@ export default function ActionConfirmDialog({
   isLoading = false,
 }) {
   return (
-    <Dialog open={open} onClose={isLoading ? undefined : onCancel} maxWidth="xs" fullWidth>
+    <Dialog
+      open={open}
+      onClose={isLoading ? undefined : onCancel}
+      disableRestoreFocus
+      maxWidth="xs"
+      fullWidth
+    >
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{message}</DialogContent>
       <DialogActions>
