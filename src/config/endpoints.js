@@ -15,13 +15,10 @@ const endpoints = {
     details: (id) => `/users/${id}`,
     role: (id) => `/users/${id}/role`,
     status: (id) => `/users/${id}/status`,
-<<<<<<< HEAD
   },
 
   students: {
     root: "/students",
-=======
->>>>>>> e39f402 ([FR-02] User management page with API integration)
   },
 };
 
