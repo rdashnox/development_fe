@@ -34,20 +34,13 @@ export default function UserModal({
   const defaultValues = user
     ? {
         ...user,
-<<<<<<< HEAD
         role: user.role ?? "",
-=======
->>>>>>> e39f402 ([FR-02] User management page with API integration)
         first_name: user.first_name ?? user.firstName ?? "",
         middle_name: user.middle_name ?? user.middleName ?? "",
         last_name: user.last_name ?? user.lastName ?? "",
         is_active: user.is_active ?? user.isActive ?? true,
       }
-<<<<<<< HEAD
     : { role: "" };
-=======
-    : {};
->>>>>>> e39f402 ([FR-02] User management page with API integration)
   const currentIsActive = user?.is_active ?? user?.isActive;
 
   const handleEditBtnPressed = () => setMode(MODES.EDIT);
@@ -143,14 +136,7 @@ export default function UserModal({
           mode={mode}
           defaultValues={defaultValues}
           onSubmit={handleSubmit}
-<<<<<<< HEAD
-<<<<<<< HEAD
           onInvalid={() => setIsSaving(false)}
-=======
->>>>>>> e39f402 ([FR-02] User management page with API integration)
-=======
-          onInvalid={() => setIsSaving(false)}
->>>>>>> 9aa54a5 ([FR-02] Loading indicators on UserTable, UserModal submit)
         />
       </DialogContent>
 
@@ -185,22 +171,12 @@ export default function UserModal({
         {mode === MODES.CREATE && (
           <>
             {canCreate && (
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9aa54a5 ([FR-02] Loading indicators on UserTable, UserModal submit)
               <Button
                 onClick={handleSubmitButtonPressed}
                 variant="contained"
                 disabled={isSaving}
                 startIcon={isSaving ? <CircularProgress size={20} /> : null}
               >
-<<<<<<< HEAD
-=======
-              <Button onClick={handleSubmitButtonPressed} variant="contained">
->>>>>>> e39f402 ([FR-02] User management page with API integration)
-=======
->>>>>>> 9aa54a5 ([FR-02] Loading indicators on UserTable, UserModal submit)
                 Submit
               </Button>
             )}
