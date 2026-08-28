@@ -1,60 +1,73 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField, Stack, MenuItem } from "@mui/material";
 import { StudentValidationSchema } from "../form/StudentValidationSchema";
 import { MODES } from "../form/formConfig";
+import { useQuery } from "@tanstack/react-query";
+import { usersApi } from "../../../api/users";
 
 export default function StudentForm({ mode, defaultValues, onSubmit, onInvalid }) {
+  const { data: users = [] } = useQuery({
+    queryKey: ["users"],
+    queryFn: usersApi.listUsers,
+  });
+
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(StudentValidationSchema),
-    defaultValues: mode === MODES.CREATE ? {} : defaultValues,
+    defaultValues: {
+      userId: defaultValues.userId || "",
+      studentNumber: defaultValues.studentNumber || "",
+      program: defaultValues.program || "",
+      yearLevel: defaultValues.yearLevel || 4,
+      internshipStatus: defaultValues.internshipStatus || "pending",
+    },
   });
 
   const isView = mode === MODES.VIEW;
-  const isCreate = mode === MODES.CREATE;
-
+  const isEdit = mode === MODES.EDIT;
+  
   return (
     <form id="student-form" onSubmit={handleSubmit(onSubmit, onInvalid)}>
       <Stack spacing={2}>
-        <TextField
-          label="First Name"
-          {...register("firstName")}
-          error={!!errors.firstName}
-          helperText={errors.firstName?.message}
-          disabled={isView || !isCreate}
-        />
-        <TextField
-          label="Last Name"
-          {...register("lastName")}
-          error={!!errors.lastName}
-          helperText={errors.lastName?.message}
-          disabled={isView || !isCreate}
-        />
-        <TextField
-          label="Middle Name"
-          {...register("middleName")}
-          error={!!errors.middleName}
-          helperText={errors.middleName?.message}
-          disabled={isView || !isCreate}
+        <Controller
+          name="userId"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              select
+              label="Select Student User"
+              error={!!errors.userId}
+              helperText={errors.userId?.message}
+              disabled={isView || isEdit}
+            >
+              {users.filter(u => u.role === 'student').map((user) => (
+                <MenuItem key={user.id} value={user.id}>
+                  {user.firstName} {user.lastName}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
         />
         <TextField
           label="Student ID"
           {...register("studentNumber")}
           error={!!errors.studentNumber}
           helperText={errors.studentNumber?.message}
-          disabled={isView || !isCreate}
+          disabled={isView || isEdit}
         />
         <TextField
           label="Program"
           {...register("program")}
           error={!!errors.program}
           helperText={errors.program?.message}
-          disabled={isView || !isCreate}
+          disabled={isView || isEdit}
         />
         <TextField
           label="Year Level"
@@ -62,21 +75,27 @@ export default function StudentForm({ mode, defaultValues, onSubmit, onInvalid }
           {...register("yearLevel")}
           error={!!errors.yearLevel}
           helperText={errors.yearLevel?.message}
-          disabled={isView}
+          disabled={true}
         />
-        <TextField
-          select
-          label="Internship Status"
-          {...register("internshipStatus")}
-          error={!!errors.internshipStatus}
-          helperText={errors.internshipStatus?.message}
-          disabled={isView}
-        >
-          <MenuItem value="pending">Pending</MenuItem>
-          <MenuItem value="active">Active</MenuItem>
-          <MenuItem value="completed">Completed</MenuItem>
-          <MenuItem value="dropped">Dropped</MenuItem>
-        </TextField>
+        <Controller
+          name="internshipStatus"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              select
+              label="Internship Status"
+              error={!!errors.internshipStatus}
+              helperText={errors.internshipStatus?.message}
+              disabled={true}
+            >
+              <MenuItem value="pending">Pending</MenuItem>
+              <MenuItem value="active">Active</MenuItem>
+              <MenuItem value="completed">Completed</MenuItem>
+              <MenuItem value="dropped">Dropped</MenuItem>
+            </TextField>
+          )}
+        />
       </Stack>
     </form>
   );

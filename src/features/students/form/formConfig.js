@@ -5,11 +5,9 @@ export const MODES = {
 };
 
 export const studentDefaultValues = {
-  firstName: "",
-  lastName: "",
-  middleName: "",
+  userId: "",
   studentNumber: "",
   program: "",
-  yearLevel: "4th",
-  internshipStatus: "Pending",
+  yearLevel: 4,
+  internshipStatus: "pending",
 };
