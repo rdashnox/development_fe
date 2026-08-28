@@ -96,7 +96,7 @@ export default function StudentModal({
           mode={mode}
           defaultValues={student || {}}
           onSubmit={handleSubmit}
-          onInvalid={() => setIsSaving(false)}
+          onInvalid={(errors) => console.log("FORM VALIDATION ERRORS:", errors)}
         />
       </DialogContent>
 

@@ -1,25 +1,28 @@
 import { useMemo } from 'react';
-import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
+import { MaterialReactTable } from 'material-react-table';
+import { IconButton } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
-export default function StudentTable({ data }) {
+export default function StudentTable({ data, onEdit }) {
   const columns = useMemo(
     () => [
       { accessorKey: 'student_number', header: 'Student ID' },
-      { accessorKey: 'profiles.firstName', header: 'First Name' },
-      { accessorKey: 'profiles.lastName', header: 'Last Name' },
       { accessorKey: 'program', header: 'Program' },
       { accessorKey: 'year_level', header: 'Year' },
       { accessorKey: 'section', header: 'Section' },
       { accessorKey: 'internship_status', header: 'Status' },
+      {
+        id: 'actions',
+        header: 'Actions',
+        Cell: ({ row }) => (
+          <IconButton onClick={() => onEdit(row.original)}>
+            <EditIcon />
+          </IconButton>
+        ),
+      },
     ],
-    [],
+    [onEdit],
   );
 
-  const table = useMaterialReactTable({
-    columns,
-    data: data || [],
-    initialState: { pagination: { pageSize: 25 } },
-  });
-
-  return <MaterialReactTable table={table} />;
+  return <MaterialReactTable columns={columns} data={data || []} />;
 }
