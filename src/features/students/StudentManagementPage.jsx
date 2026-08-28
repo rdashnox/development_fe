@@ -3,7 +3,7 @@ import { Add as AddIcon } from "@mui/icons-material";
 import CardStat from "../../components/common/CardStat";
 import StudentTable from "./components/StudentTable";
 import StudentModal from "./components/StudentModal";
-import { useAuth } from "../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import { useStudents } from "./hooks/useStudents";
 import { useStudentMutations } from "./hooks/useStudentMutations";
 import { useStudentModalState } from "./hooks/useStudentModalState";
