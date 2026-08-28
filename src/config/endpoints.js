@@ -18,7 +18,8 @@ const endpoints = {
   },
 
   students: {
-    root: "/students",
+    list: "/students",
+    details: (id) => `/students/${id}`,
   },
 };
 

@@ -1,10 +1,6 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-<<<<<<< HEAD
 import { zodResolver } from "@hookform/resolvers/zod";
-=======
-import { yupResolver } from "@hookform/resolvers/yup";
->>>>>>> e39f402 ([FR-02] User management page with API integration)
 import {
   Chip,
   FormControl,
@@ -29,14 +25,7 @@ export default function UserForm({
   mode,
   defaultValues = {},
   onSubmit,
-<<<<<<< HEAD
-<<<<<<< HEAD
   onInvalid,
-=======
->>>>>>> e39f402 ([FR-02] User management page with API integration)
-=======
-  onInvalid,
->>>>>>> 9aa54a5 ([FR-02] Loading indicators on UserTable, UserModal submit)
   formId = "user-form",
 }) {
   const { getFieldRule } = getUserFormPermissions(role, mode);
@@ -47,11 +36,7 @@ export default function UserForm({
     handleSubmit,
     formState: { errors },
   } = useForm({
-<<<<<<< HEAD
     resolver: zodResolver(schema),
-=======
-    resolver: yupResolver(schema),
->>>>>>> e39f402 ([FR-02] User management page with API integration)
     defaultValues,
     mode: "onBlur",
   });
@@ -73,15 +58,7 @@ export default function UserForm({
     <Stack
       component="form"
       id={formId}
-<<<<<<< HEAD
-<<<<<<< HEAD
       onSubmit={handleSubmit(handleSubmitData, onInvalid)}
-=======
-      onSubmit={handleSubmit(handleSubmitData)}
->>>>>>> e39f402 ([FR-02] User management page with API integration)
-=======
-      onSubmit={handleSubmit(handleSubmitData, onInvalid)}
->>>>>>> 9aa54a5 ([FR-02] Loading indicators on UserTable, UserModal submit)
       spacing={2}
     >
       {visibleFields.map((field) => {

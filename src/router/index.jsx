@@ -7,7 +7,7 @@ import PrivacyPolicy from "../pages/PrivacyPolicy";
 import TermsConditions from "../pages/TermsConditions";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
-import StudentManagementPage from "../pages/StudentManagementPage";
+import StudentManagementPage from "../features/students/StudentManagementPage";
 
 import Dashboard from "../pages/Dashboard";
 import UserManagementPage from "../features/users/UserManagementPage";
