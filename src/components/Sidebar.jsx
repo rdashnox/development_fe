@@ -46,7 +46,7 @@ const menuItems = [
     label: "Students",
     path: "/students",
     icon: <PeopleIcon />,
-    roles: ["administrator", "internship_coordinator"],
+    roles: ["administrator", "internship_coordinator", "student"],
   }
 ];
 

@@ -5,7 +5,7 @@ import { TextField, Stack, MenuItem } from "@mui/material";
 import { StudentValidationSchema } from "../form/StudentValidationSchema";
 import { MODES } from "../form/formConfig";
 
-export default function StudentForm({ mode, defaultValues, onSubmit, onInvalid }) {
+export default function StudentForm({ mode, defaultValues, onSubmit, onInvalid, isStudent }) {
   const {
     register,
     handleSubmit,
@@ -14,39 +14,80 @@ export default function StudentForm({ mode, defaultValues, onSubmit, onInvalid }
   } = useForm({
     resolver: zodResolver(StudentValidationSchema),
     defaultValues: {
-      studentNumber: defaultValues.student_number || "",
+      userId: defaultValues.userId || "",
+      studentNumber: defaultValues.student_number || defaultValues.studentNumber || "",
       program: defaultValues.program || "",
-      yearLevel: defaultValues.year_level || 4,
+      yearLevel: defaultValues.year_level || defaultValues.yearLevel || 4,
       section: defaultValues.section || "",
-      internshipStatus: defaultValues.internship_status || "pending",
+      contactNumber: defaultValues.contact_number || defaultValues.contactNumber || "",
+      address: defaultValues.address || "",
+      emergencyContactName: defaultValues.emergency_contact_name || defaultValues.emergencyContactName || "",
+      emergencyContactNumber: defaultValues.emergency_contact_number || defaultValues.emergencyContactNumber || "",
+      internshipStatus: defaultValues.internship_status || defaultValues.internshipStatus || "pending",
     },
   });
 
   const isView = mode === MODES.VIEW;
-  
+
   return (
     <form id="student-form" onSubmit={handleSubmit(onSubmit, onInvalid)}>
       <Stack spacing={2}>
         <TextField
           label="Student ID"
           {...register("studentNumber")}
-          disabled={true}
+          error={!!errors.studentNumber}
+          helperText={errors.studentNumber?.message}
+          disabled={isView || isStudent}
         />
         <TextField
           label="Program"
           {...register("program")}
-          disabled={true}
+          error={!!errors.program}
+          helperText={errors.program?.message}
+          disabled={isView || isStudent}
         />
         <TextField
           label="Year Level"
           type="number"
           {...register("yearLevel")}
-          disabled={true}
+          error={!!errors.yearLevel}
+          helperText={errors.yearLevel?.message}
+          disabled={isView || isStudent}
         />
         <TextField
           label="Section"
           {...register("section")}
-          disabled={true}
+          error={!!errors.section}
+          helperText={errors.section?.message}
+          disabled={isView || isStudent}
+        />
+        <TextField
+          label="Contact Number"
+          {...register("contactNumber")}
+          error={!!errors.contactNumber}
+          helperText={errors.contactNumber?.message}
+          disabled={isView}
+        />
+        <TextField
+          label="Address"
+          {...register("address")}
+          error={!!errors.address}
+          helperText={errors.address?.message}
+          disabled={isView}
+        />
+        <TextField
+          label="Emergency Contact Name"
+          {...register("emergencyContactName")}
+          error={!!errors.emergencyContactName}
+          helperText={errors.emergencyContactName?.message}
+          disabled={isView}
+        />
+        <TextField
+          label="Emergency Contact Number"
+          {...register("emergencyContactNumber")}
+          error={!!errors.emergencyContactNumber}
+          helperText={errors.emergencyContactNumber?.message}
+          disabled={isView}
         />
         <Controller
           name="internshipStatus"
@@ -58,7 +99,7 @@ export default function StudentForm({ mode, defaultValues, onSubmit, onInvalid }
               label="Internship Status"
               error={!!errors.internshipStatus}
               helperText={errors.internshipStatus?.message}
-              disabled={isView}
+              disabled={isView || isStudent}
             >
               <MenuItem value="pending">Pending</MenuItem>
               <MenuItem value="active">Active</MenuItem>

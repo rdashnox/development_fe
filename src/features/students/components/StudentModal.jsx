@@ -23,6 +23,7 @@ export default function StudentModal({
   onSuccess,
   onCreate,
   onUpdate,
+  isStudent,
 }) {
   const [mode, setMode] = useState(initialMode);
   const [isSaving, setIsSaving] = useState(false);
@@ -94,6 +95,7 @@ export default function StudentModal({
         <StudentForm
           key={mode}
           mode={mode}
+          isStudent={isStudent}
           defaultValues={student || {}}
           onSubmit={handleSubmit}
           onInvalid={(errors) => console.log("FORM VALIDATION ERRORS:", errors)}

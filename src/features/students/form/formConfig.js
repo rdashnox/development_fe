@@ -9,5 +9,10 @@ export const studentDefaultValues = {
   studentNumber: "",
   program: "",
   yearLevel: 4,
+  section: "",
+  contactNumber: "",
+  address: "",
+  emergencyContactName: "",
+  emergencyContactNumber: "",
   internshipStatus: "pending",
 };
