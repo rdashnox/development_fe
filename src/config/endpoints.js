@@ -19,6 +19,7 @@ const endpoints = {
 
   students: {
     list: "/students",
+    me: "/students/me",
     details: (id) => `/students/${id}`,
   },
 };

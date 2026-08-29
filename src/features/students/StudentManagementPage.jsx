@@ -1,5 +1,4 @@
-import { Box, Typography, CircularProgress, Alert, Button } from "@mui/material";
-import { Add as AddIcon } from "@mui/icons-material";
+import { Box, Typography, CircularProgress, Alert } from "@mui/material";
 import CardStat from "../../components/common/CardStat";
 import StudentTable from "./components/StudentTable";
 import StudentModal from "./components/StudentModal";
@@ -12,12 +11,15 @@ import { MODES } from "./form/formConfig";
 
 export default function StudentManagementPage() {
   const { user, isLoading: isAuthLoading } = useAuth();
-  const { data: students, isLoading, isError, error } = useStudents();
+  // Pass the role to useStudents
+  const { data: students, isLoading, isError, error } = useStudents(user?.role);
   const modalState = useStudentModalState();
   const { onCreate, onUpdate } = useStudentMutations();
   
   const permissions = getStudentManagementPermissions(user?.role);
-  const safeStudents = students || [];
+  
+  // Normalize data: if user is student, wrap single object in an array
+  const safeStudents = isLoading || isError || !students ? [] : (Array.isArray(students) ? students : [students]);
 
   if (isAuthLoading || isLoading) return <CircularProgress />;
   if (!permissions.canView) return <Typography color="error">Access denied.</Typography>;
@@ -30,7 +32,7 @@ export default function StudentManagementPage() {
       </Box>
 
       <Box sx={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 2, mb: 4 }}>
-        <CardStat title="Total Students" value={safeStudents.length} />
+        <CardStat title="Total Records" value={safeStudents.length} />
         <CardStat title="Active" value={safeStudents.filter(s => s.internship_status === "active").length} />
       </Box>
 

@@ -17,4 +17,14 @@ export const studentApi = {
     const response = await api.patch(endpoints.students.details(id), payload);
     return response.data.data;
   },
+
+  async getMyProfile() {
+    const response = await api.get(endpoints.students.me);
+    return response.data.data;
+  },
+
+  async updateMyProfile(payload) {
+    const response = await api.patch(endpoints.students.me, payload);
+    return response.data.data;
+  },
 };
