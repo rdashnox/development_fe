@@ -1,17 +1,11 @@
 import { MenuItem } from "@mui/material";
 import BadgeRole from "./BadgeRole";
 import BadgeStatus from "./BadgeStatus";
+import { ROLE_OPTIONS } from "../form/formConfig";
 
 //-----------------
 // HELPERS
 //-----------------
-const ROLE_OPTIONS = [
-  { value: "student", label: "Student" },
-  { value: "administrator", label: "Administrator" },
-  { value: "hte_supervisor", label: "HTE Supervisor" },
-  { value: "faculty_adviser", label: "Faculty Adviser" },
-  { value: "internship_coordinator", label: "Internship Coordinator" },
-];
 
 const formatRole = (role) =>
   ROLE_OPTIONS.find((option) => option.value === role)?.label ?? role;

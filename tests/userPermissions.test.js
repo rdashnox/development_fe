@@ -10,6 +10,7 @@ import {
   ROLES,
   userFormConfig,
 } from "../src/features/users/form/formConfig";
+import getValidationSchema from "../src/features/users/form/UserValidationSchema";
 
 describe("user permissions", () => {
   it("grants administrators management access and denies other roles", () => {
@@ -32,5 +33,26 @@ describe("user permissions", () => {
     expect(getFieldRule(roleField, ROLES.STUDENT, MODES.EDIT)).toBe(
       FIELD_RULES.HIDDEN,
     );
+  });
+
+  it("returns user-friendly required errors", () => {
+    const schema = getValidationSchema(MODES.CREATE);
+    const result = schema.safeParse({
+      email: undefined,
+      first_name: undefined,
+      last_name: undefined,
+      middle_name: undefined,
+      suffix: undefined,
+      role: undefined,
+      password: undefined,
+    });
+    
+    expect(result.success).toBe(false);
+    expect(
+      result.error.issues.some(
+        (issue) =>
+          issue.path[0] === "email" && issue.message === "Email is required",
+      ),
+    ).toBe(true);
   });
 });

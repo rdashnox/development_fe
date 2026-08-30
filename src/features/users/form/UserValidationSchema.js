@@ -9,13 +9,33 @@ const roleSchema = [
   "hte_supervisor",
 ];
 
-const roleValidator = z
-  .string()
-  .min(1, "Role is required")
-  .refine((value) => roleSchema.includes(value), "Role is required");
+const requiredString = (fieldName, maxLength) =>
+  z.preprocess(
+    (value) => (value === undefined || value === null ? "" : value),
+    z
+      .string({
+        required_error: `${fieldName} is required`,
+        invalid_type_error: `${fieldName} is required`,
+      })
+      .trim()
+      .min(1, `${fieldName} is required`)
+      .pipe(
+        maxLength
+          ? z.string().max(maxLength, `${fieldName} must be at most ${maxLength} characters`)
+          : z.string(),
+      ),
+  );
+
+const roleValidator = requiredString("Role").refine(
+  (value) => roleSchema.includes(value),
+  "Role is required",
+);
 
 const optionalNullableString = (max, message) =>
-  z.string().max(max, message).optional().nullable();
+  z.preprocess(
+    (value) => (value === "" ? null : value),
+    z.string().max(max, message).optional().nullable(),
+  );
 
 export const getValidationSchema = (mode) => {
   if (mode === MODES.CREATE) {
@@ -29,57 +49,48 @@ export const getValidationSchema = (mode) => {
 };
 
 const createUserValidationSchema = z.object({
-  email: z
-    .string()
-    .email("Must be a valid email")
-    .min(1, "Email is required"),
-  first_name: z
-    .string()
-    .min(1, "First name is required")
-    .min(1, "First name must be at least 1 character")
-    .max(50, "First name must be at most 50 characters"),
+  email: requiredString("Email").refine(
+    (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+    "Must be a valid email",
+  ),
+  first_name: requiredString("First name", 50),
   middle_name: optionalNullableString(
     50,
     "Middle name must be at most 50 characters",
   ),
-  last_name: z
-    .string()
-    .min(1, "Last name is required")
-    .min(1, "Last name must be at least 1 character")
-    .max(50, "Last name must be at most 50 characters"),
+  last_name: requiredString("Last name", 50),
   suffix: z.string().optional().nullable(),
   role: roleValidator,
-  password: z
-    .string()
-    .min(1, "Password is required")
-    .min(8, "Password must be at least 8 characters")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[0-9]/, "Password must contain at least one number")
-    .regex(
-      /[!@#$%^&*]/,
+  password: requiredString("Password")
+    .refine(
+      (value) => value.length >= 8,
+      "Password must be at least 8 characters",
+    )
+    .refine(
+      (value) => /[A-Z]/.test(value),
+      "Password must contain at least one uppercase letter",
+    )
+    .refine(
+      (value) => /[0-9]/.test(value),
+      "Password must contain at least one number",
+    )
+    .refine(
+      (value) => /[!@#$%^&*]/.test(value),
       "Password must contain at least one special character",
     ),
 });
 
 const editUserValidationSchema = z.object({
-  email: z
-    .string()
-    .email("Must be a valid email")
-    .min(1, "Email is required"),
-  first_name: z
-    .string()
-    .min(1, "First name is required")
-    .min(1, "First name must be at least 1 character")
-    .max(50, "First name must be at most 50 characters"),
+  email: requiredString("Email").refine(
+    (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+    "Must be a valid email",
+  ),
+  first_name: requiredString("First name", 50),
   middle_name: optionalNullableString(
     50,
     "Middle name must be at most 50 characters",
   ),
-  last_name: z
-    .string()
-    .min(1, "Last name is required")
-    .min(1, "Last name must be at least 1 character")
-    .max(50, "Last name must be at most 50 characters"),
+  last_name: requiredString("Last name", 50),
   suffix: z.string().optional().nullable(),
   role: roleValidator,
   is_active: z.boolean({ error: "Account status is required" }),

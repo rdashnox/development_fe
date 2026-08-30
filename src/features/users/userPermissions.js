@@ -20,7 +20,23 @@ export function getUserManagementPermissions(role) {
 }
 
 export function getFieldRule(field, role, mode) {
-	return field?.rbac?.[role]?.[mode] || FIELD_RULES.HIDDEN;
+	if (!field || !field.rbac) {
+		return FIELD_RULES.HIDDEN;
+	}
+
+	// Look up the { create, edit, view } object for this role.
+	const modeRulesForRole = field.rbac[role];
+	if (modeRulesForRole === undefined) {
+		return FIELD_RULES.HIDDEN;
+	}
+
+	// Pick the single rule value for this mode {"required", "hidden", "readonly"}
+	const fieldRuleForMode = modeRulesForRole[mode];
+	if (fieldRuleForMode === undefined) {
+		return FIELD_RULES.HIDDEN;
+	}
+
+	return fieldRuleForMode;
 }
 
 export function canDoOperation(role, mode) {

@@ -19,6 +19,20 @@ export const FIELD_RULES = {
   REQUIRED: "required",
 };
 
+// Imported into files (user management related) requiring role constants
+export const ROLE_OPTIONS = [
+  { value: ROLES.ADMIN, label: "Administrator" },
+  { value: ROLES.INTERNSHIP_COORDINATOR, label: "Internship Coordinator" },
+  { value: ROLES.FACULTY_ADVISER, label: "Faculty Adviser" },
+  { value: ROLES.HTE_SUPERVISOR, label: "HTE Supervisor" },
+  { value: ROLES.STUDENT, label: "Student" },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// FIELD CONFIG
+//
+// The default for any unlisted role + mode is HIDDEN, handled by getFieldRule() in userPermissions.js.
+// ─────────────────────────────────────────────────────────────────────────────
 export const userFormConfig = [
   {
     name: "id",
@@ -29,26 +43,6 @@ export const userFormConfig = [
         [MODES.CREATE]: FIELD_RULES.HIDDEN,
         [MODES.EDIT]: FIELD_RULES.READONLY,
         [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.INTERNSHIP_COORDINATOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.HIDDEN,
-      },
-      [ROLES.FACULTY_ADVISER]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.HIDDEN,
-      },
-      [ROLES.HTE_SUPERVISOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.HIDDEN,
-      },
-      [ROLES.STUDENT]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.HIDDEN,
       },
     },
   },
@@ -63,26 +57,6 @@ export const userFormConfig = [
         [MODES.EDIT]: FIELD_RULES.READONLY,
         [MODES.VIEW]: FIELD_RULES.READONLY,
       },
-      [ROLES.INTERNSHIP_COORDINATOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.HIDDEN,
-      },
-      [ROLES.FACULTY_ADVISER]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.HIDDEN,
-      },
-      [ROLES.HTE_SUPERVISOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.HIDDEN,
-      },
-      [ROLES.STUDENT]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.HIDDEN,
-      },
     },
   },
   {
@@ -93,26 +67,6 @@ export const userFormConfig = [
       [ROLES.ADMIN]: {
         [MODES.CREATE]: FIELD_RULES.REQUIRED,
         [MODES.EDIT]: FIELD_RULES.EDITABLE,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.INTERNSHIP_COORDINATOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.FACULTY_ADVISER]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.HTE_SUPERVISOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.STUDENT]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
         [MODES.VIEW]: FIELD_RULES.READONLY,
       },
     },
@@ -127,26 +81,6 @@ export const userFormConfig = [
         [MODES.EDIT]: FIELD_RULES.EDITABLE,
         [MODES.VIEW]: FIELD_RULES.READONLY,
       },
-      [ROLES.INTERNSHIP_COORDINATOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.FACULTY_ADVISER]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.HTE_SUPERVISOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.STUDENT]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
     },
   },
   {
@@ -157,26 +91,6 @@ export const userFormConfig = [
       [ROLES.ADMIN]: {
         [MODES.CREATE]: FIELD_RULES.REQUIRED,
         [MODES.EDIT]: FIELD_RULES.EDITABLE,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.INTERNSHIP_COORDINATOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.FACULTY_ADVISER]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.HTE_SUPERVISOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.STUDENT]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
         [MODES.VIEW]: FIELD_RULES.READONLY,
       },
     },
@@ -191,26 +105,6 @@ export const userFormConfig = [
         [MODES.EDIT]: FIELD_RULES.EDITABLE,
         [MODES.VIEW]: FIELD_RULES.READONLY,
       },
-      [ROLES.INTERNSHIP_COORDINATOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.FACULTY_ADVISER]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.HTE_SUPERVISOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.STUDENT]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
     },
   },
   {
@@ -223,95 +117,29 @@ export const userFormConfig = [
         [MODES.EDIT]: FIELD_RULES.EDITABLE,
         [MODES.VIEW]: FIELD_RULES.READONLY,
       },
-      [ROLES.INTERNSHIP_COORDINATOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.FACULTY_ADVISER]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.HTE_SUPERVISOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.STUDENT]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
     },
   },
   {
     name: "role",
     label: "Role",
     type: "select",
-    options: [
-      { value: ROLES.ADMIN, label: "Administrator" },
-      { value: ROLES.INTERNSHIP_COORDINATOR, label: "Internship Coordinator" },
-      { value: ROLES.FACULTY_ADVISER, label: "Faculty Adviser" },
-      { value: ROLES.HTE_SUPERVISOR, label: "HTE Supervisor" },
-      { value: ROLES.STUDENT, label: "Student" },
-    ],
+    options: ROLE_OPTIONS,
     rbac: {
       [ROLES.ADMIN]: {
         [MODES.CREATE]: FIELD_RULES.REQUIRED,
         [MODES.EDIT]: FIELD_RULES.EDITABLE,
         [MODES.VIEW]: FIELD_RULES.READONLY,
       },
-      [ROLES.INTERNSHIP_COORDINATOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.FACULTY_ADVISER]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.HTE_SUPERVISOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.STUDENT]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
     },
   },
-    {
+  {
     name: "is_active",
     label: "Account Status",
-      type: "status",
+    type: "status",
     rbac: {
       [ROLES.ADMIN]: {
         [MODES.CREATE]: FIELD_RULES.HIDDEN,
         [MODES.EDIT]: FIELD_RULES.EDITABLE,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.INTERNSHIP_COORDINATOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.FACULTY_ADVISER]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.HTE_SUPERVISOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.READONLY,
-      },
-      [ROLES.STUDENT]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
         [MODES.VIEW]: FIELD_RULES.READONLY,
       },
     },
@@ -323,26 +151,6 @@ export const userFormConfig = [
     rbac: {
       [ROLES.ADMIN]: {
         [MODES.CREATE]: FIELD_RULES.REQUIRED,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.HIDDEN,
-      },
-       [ROLES.INTERNSHIP_COORDINATOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.HIDDEN,
-      },
-      [ROLES.FACULTY_ADVISER]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.HIDDEN,
-      },
-      [ROLES.HTE_SUPERVISOR]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
-        [MODES.EDIT]: FIELD_RULES.HIDDEN,
-        [MODES.VIEW]: FIELD_RULES.HIDDEN,
-      },
-      [ROLES.STUDENT]: {
-        [MODES.CREATE]: FIELD_RULES.HIDDEN,
         [MODES.EDIT]: FIELD_RULES.HIDDEN,
         [MODES.VIEW]: FIELD_RULES.HIDDEN,
       },
