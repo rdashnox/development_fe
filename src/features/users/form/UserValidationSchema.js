@@ -93,7 +93,7 @@ const editUserValidationSchema = z.object({
   last_name: requiredString("Last name", 50),
   suffix: z.string().optional().nullable(),
   role: roleValidator,
-  is_active: z.boolean({ error: "Account status is required" }),
+  is_active: z.boolean({ invalid_type_error: "Status is required" }),
 });
 
 export default getValidationSchema;

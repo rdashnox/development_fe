@@ -17,6 +17,7 @@ export default function DarkButton({
       disabled={disabled}
       onClick={onClick}
       sx={{
+        px: 5,
         backgroundColor: 'primary.dark',
         color: 'primary.contrastText',
         '&:hover': {

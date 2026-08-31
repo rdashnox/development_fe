@@ -66,7 +66,7 @@ export const userFormConfig = [
     rbac: {
       [ROLES.ADMIN]: {
         [MODES.CREATE]: FIELD_RULES.REQUIRED,
-        [MODES.EDIT]: FIELD_RULES.EDITABLE,
+        [MODES.EDIT]: FIELD_RULES.READONLY,
         [MODES.VIEW]: FIELD_RULES.READONLY,
       },
     },
