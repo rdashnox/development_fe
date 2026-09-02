@@ -5,7 +5,7 @@ import { TextField, Stack, MenuItem } from "@mui/material";
 import { StudentValidationSchema } from "../form/StudentValidationSchema";
 import { MODES } from "../form/formConfig";
 
-export default function StudentForm({ mode, defaultValues, onSubmit, onInvalid, isStudent }) {
+export default function StudentForm({ mode, defaultValues, onSubmit, onInvalid, isStudent, availableUsers }) {
   const {
     register,
     handleSubmit,
@@ -15,10 +15,11 @@ export default function StudentForm({ mode, defaultValues, onSubmit, onInvalid, 
   } = useForm({
     resolver: zodResolver(StudentValidationSchema),
     defaultValues: {
-      userId: defaultValues.userId || "",
-      firstName: defaultValues.firstName || defaultValues.first_name || "",
-      middleName: defaultValues.middleName || defaultValues.middle_name || "",
-      lastName: defaultValues.lastName || defaultValues.last_name || "",
+      userId: defaultValues.userId || defaultValues.user_id || defaultValues.user?.id || "",
+      email: defaultValues.email || defaultValues.user?.email || "",
+      firstName: defaultValues.firstName || defaultValues.first_name || defaultValues.user?.first_name || defaultValues.user?.firstName || "",
+      middleName: defaultValues.middleName || defaultValues.middle_name || defaultValues.user?.middle_name || defaultValues.user?.middleName || "",
+      lastName: defaultValues.lastName || defaultValues.last_name || defaultValues.user?.last_name || defaultValues.user?.lastName || "",
       studentNumber: defaultValues.studentNumber || defaultValues.student_number || "",
       program: defaultValues.program || "",
       yearLevel: defaultValues.yearLevel || defaultValues.year_level || 4,
@@ -51,35 +52,66 @@ export default function StudentForm({ mode, defaultValues, onSubmit, onInvalid, 
   }, [defaultValues, reset]);
 
   const isView = mode === MODES.VIEW;
+  const isCreate = mode === MODES.CREATE;
 
   const handleFormSubmit = (data) => {
     const cleanedData = {
       ...data,
+      first_name: data.firstName,
+      middle_name: data.middleName,
+      last_name: data.lastName,
       contactNumber: data.contactNumber || null,
       address: data.address || null,
       emergencyContactName: data.emergencyContactName || null,
       emergencyContactNumber: data.emergencyContactNumber || null,
       yearLevel: Number(data.yearLevel),
     };
+    
+    // Remove the original camelCase fields to avoid sending duplicate/unnecessary data
+    delete cleanedData.firstName;
+    delete cleanedData.middleName;
+    delete cleanedData.lastName;
+    
     onSubmit(cleanedData);
   };
 
   return (
     <form id="student-form" onSubmit={handleSubmit(handleFormSubmit, onInvalid)}>
       <Stack spacing={2}>
-        <TextField
-          label="User ID"
-          {...register("userId")}
-          error={!!errors.userId}
-          helperText={errors.userId?.message}
-          disabled={isView || isStudent}
-        />
+        {isCreate ? (
+          <Controller
+            name="userId"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                select
+                label="Select Student User"
+                error={!!errors.userId}
+                helperText={errors.userId?.message}
+                disabled={isView || isStudent}
+              >
+                {availableUsers.map((user) => (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user.first_name} {user.last_name} ({user.email})
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          />
+        ) : (
+            <TextField
+                label="User ID"
+                {...register("userId")}
+                disabled={true} // ID cannot change in EDIT/VIEW
+            />
+        )}
         <TextField
           label="Email Address"
           {...register("email")}
           error={!!errors.email}
           helperText={errors.email?.message}
-          disabled={isView || isStudent}
+          disabled={isView || isStudent} 
         />
         <TextField
           label="First Name"

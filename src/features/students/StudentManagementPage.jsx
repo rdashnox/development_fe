@@ -22,36 +22,23 @@ export default function StudentManagementPage() {
   
   // Merge student records with user metadata for names
   const mergedStudents = useMemo(() => {
-    
     if (!students) return [];
+    
     const studentsArr = Array.isArray(students) ? students : [students];
 
     return studentsArr.map((student) => {
-      // 1. Resolve student's linked user ID
-      const studentUserId = student.userId || student.user_id || student.id || student.user?.id;
-
-      // 2. Find matching user record
-      const userRecord = userData?.find(
-        (u) =>
-          u.id === studentUserId ||
-          u.userId === studentUserId ||
-          u.user_id === studentUserId
-      ) || student.user || {};
-
-      // 3. Extract user metadata/flat name fields
+      // Backend contract: student.id IS the user.id
+      const studentUserId = student.id; 
+      const userRecord = userData?.find(u => u.id === studentUserId) || student.user || {};
       const meta = userRecord.user_metadata || {};
-      const firstName = userRecord.first_name || userRecord.firstName || meta.first_name || meta.firstName || student.firstName || student.first_name || "";
-      const middleName = userRecord.middle_name || userRecord.middleName || meta.middle_name || meta.middleName || student.middleName || student.middle_name || "";
-      const lastName = userRecord.last_name || userRecord.lastName || meta.last_name || meta.lastName || student.lastName || student.last_name || "";
-      const email = student.email || userRecord.email || meta.email || "";
 
       return {
         ...student,
         userId: studentUserId,
-        email: email,
-        firstName,
-        lastName,
-        middleName,
+        email: student.email || userRecord.email || meta.email || "",
+        firstName: student.firstName || student.first_name || userRecord.firstName || userRecord.first_name || meta.firstName || meta.first_name || "",
+        middleName: student.middleName || student.middle_name || userRecord.middleName || userRecord.middle_name || meta.middleName || meta.middle_name || "",
+        lastName: student.lastName || student.last_name || userRecord.lastName || userRecord.last_name || meta.lastName || meta.last_name || "",
       };
     });
   }, [students, userData]);
@@ -67,7 +54,7 @@ export default function StudentManagementPage() {
         {permissions.canCreate && (
           <Button 
             variant="contained" 
-            onClick={() => modalState.open(MODES.CREATE)}
+            onClick={() => modalState.open(MODES.CREATE, null)}
           >
             Add Student
           </Button>
@@ -86,6 +73,7 @@ export default function StudentManagementPage() {
       />
 
       <StudentModal
+        key={`${modalState.mode}-${modalState.selectedStudent?.id || "new"}-${modalState.isOpen}`}
         open={modalState.isOpen}
         mode={modalState.mode}
         student={modalState.selectedStudent}
@@ -94,6 +82,7 @@ export default function StudentManagementPage() {
         onCreate={onCreate.mutateAsync}
         onUpdate={onUpdate.mutateAsync}
         isStudent={false}
+        availableUsers={userData.filter(u => !mergedStudents.some(s => s.userId === u.id))}
       />
     </Box>
   );

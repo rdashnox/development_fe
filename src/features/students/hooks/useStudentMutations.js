@@ -5,10 +5,17 @@ import notify from "../../../utils/toast";
 export function useStudentMutations() {
   const queryClient = useQueryClient();
 
+  const invalidate = async () => {
+    await Promise.all([
+      queryClient.invalidateQueries({ queryKey: ["students"], refetchType: 'all' }),
+      queryClient.invalidateQueries({ queryKey: ["users"], refetchType: 'all' })
+    ]);
+  };
+
   const onCreate = useMutation({
-    mutationFn: studentApi.createStudent,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["students"]);
+    mutationFn: (payload) => studentApi.createStudent(payload),
+    onSuccess: async () => {
+      await invalidate();
       notify.success("Student created successfully!");
     },
   });
@@ -20,11 +27,10 @@ export function useStudentMutations() {
       }
       return studentApi.updateStudent(id, payload);
     },
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries(["students"]);
-      queryClient.invalidateQueries(["users"]);
+    onSuccess: async (_, variables) => {
+      await invalidate();
       if (variables.role === "student") {
-        queryClient.invalidateQueries(["students", "me"]);
+        await queryClient.invalidateQueries(["students", "me"]);
       }
       notify.success("Student updated successfully!");
     },

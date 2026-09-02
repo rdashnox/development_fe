@@ -25,6 +25,7 @@ export default function StudentModal({
   onCreate,
   onUpdate,
   isStudent,
+  availableUsers,
 }) {
   const [mode, setMode] = useState(initialMode);
   const [isSaving, setIsSaving] = useState(false);
@@ -37,32 +38,37 @@ export default function StudentModal({
     setMode(MODES.VIEW);
   };
 
-  const handleSubmitButtonPressed = () => {
-    setIsSaving(true);
-    document.getElementById("student-form")?.requestSubmit();
+  const getTitle = () => {
+    if (mode === MODES.CREATE) return "Add New Student";
+    if (mode === MODES.EDIT) return "Edit Student";
+    return "View Student Details";
   };
-const handleSubmit = async (data) => {
-  setError(null);
-  try {
-    if (mode === MODES.CREATE) {
-      await onCreate?.(data);
-      onSuccess?.("Student created successfully!");
-    } else {
-      const studentId = student?.id;
-      if (!studentId) {
-        throw new Error("No student record selected for update.");
+
+  const handleSubmit = async (data) => {
+    setError(null);
+    try {
+      if (mode === MODES.CREATE) {
+        await onCreate?.(data);
+        onSuccess?.("Student created successfully!");
+      } else if (mode === MODES.EDIT) {
+        const studentId = student?.id;
+        if (!studentId) {
+          throw new Error("No student record selected for update.");
+        }
+        
+        const payload = { ...data };
+        delete payload.userId;
+        await onUpdate?.({ id: studentId, payload, role: user?.role });
+        onSuccess?.("Student updated successfully!");
       }
-      await onUpdate?.({ id: studentId, payload: data, role: user?.role });
-      onSuccess?.("Student updated successfully!");
+      setIsSaving(false);
+      onClose();
+    } catch (submitError) {
+      setIsSaving(false);
+      console.error("Full Submit Error:", submitError);
+      setError(submitError.response?.data?.message || submitError.message || "Unable to save student.");
     }
-    setIsSaving(false);
-    onClose();
-  } catch (submitError) {
-    setIsSaving(false);
-    console.error("Full Submit Error:", submitError);
-    setError(submitError.response?.data?.message || submitError.message || "Unable to save student.");
-  }
-};
+  };
 
   const canEdit = permissions?.canUpdate;
 
@@ -75,11 +81,7 @@ const handleSubmit = async (data) => {
       disablePortal={disablePortal}
     >
       <DialogTitle>
-        {mode === MODES.VIEW
-          ? "View Student"
-          : mode === MODES.EDIT
-            ? "Edit Student"
-            : "Create Student"}
+        {getTitle()}
 
         <IconButton
           aria-label="close"
@@ -104,6 +106,7 @@ const handleSubmit = async (data) => {
           defaultValues={student || {}}
           onSubmit={handleSubmit}
           onInvalid={() => setIsSaving(false)}
+          availableUsers={availableUsers}
         />
       </DialogContent>
 
@@ -120,7 +123,8 @@ const handleSubmit = async (data) => {
               Cancel
             </Button>
             <Button
-              onClick={handleSubmitButtonPressed}
+              type="submit"
+              form="student-form"
               color="success"
               variant="contained"
               disabled={isSaving}
