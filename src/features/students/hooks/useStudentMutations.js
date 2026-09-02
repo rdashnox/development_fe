@@ -22,6 +22,7 @@ export function useStudentMutations() {
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries(["students"]);
+      queryClient.invalidateQueries(["users"]);
       if (variables.role === "student") {
         queryClient.invalidateQueries(["students", "me"]);
       }

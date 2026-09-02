@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Box, Typography, CircularProgress, Alert, Card, CardContent, Grid, TextField, Button, Chip, Divider } from "@mui/material";
+import { Box, Typography, CircularProgress, Alert, Card, CardContent, TextField, Button, Chip, Divider, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import { useStudents } from "./hooks/useStudents";
 import { useStudentMutations } from "./hooks/useStudentMutations";
+import { toSentenceCase } from "./utils/formatters";
 
 export default function StudentProfilePage() {
   const { user, isLoading: isAuthLoading } = useAuth();
@@ -33,7 +34,12 @@ export default function StudentProfilePage() {
   }, [student, isEditing, reset]);
 
   if (isAuthLoading || isLoading) return <CircularProgress />;
-  if (isError) return <Alert severity="error">{error?.message || "Error loading profile."}</Alert>;
+  if (isError) {
+    if (error?.response?.status === 404) {
+      return <Typography>No profile found.</Typography>;
+    }
+    return <Alert severity="error">{error?.message || "Error loading profile."}</Alert>;
+  }
   if (!student) return <Typography>No profile found.</Typography>;
 
   const contactFields = [
@@ -76,19 +82,19 @@ export default function StudentProfilePage() {
           
           <Divider sx={{ mb: 3 }} />
 
-          <Grid container spacing={3}>
-            <Grid xs={12} md={6}><Typography variant="subtitle2" color="textSecondary">Student ID</Typography><Typography variant="body1">{student.student_number}</Typography></Grid>
-            <Grid xs={12} md={6}><Typography variant="subtitle2" color="textSecondary">Program</Typography><Typography variant="body1">{student.program}</Typography></Grid>
-            <Grid xs={12} md={6}><Typography variant="subtitle2" color="textSecondary">Year Level</Typography><Typography variant="body1">{student.year_level}</Typography></Grid>
-            <Grid xs={12} md={6}><Typography variant="subtitle2" color="textSecondary">Internship Status</Typography><Chip label={student.internship_status} color={student.internship_status === 'active' ? 'success' : 'default'} /></Grid>
-          </Grid>
+          <Stack spacing={2}>
+            <Box><Typography variant="subtitle2" color="textSecondary">Student ID</Typography><Typography variant="body1">{student.student_number}</Typography></Box>
+            <Box><Typography variant="subtitle2" color="textSecondary">Program</Typography><Typography variant="body1">{student.program}</Typography></Box>
+            <Box><Typography variant="subtitle2" color="textSecondary">Year Level</Typography><Typography variant="body1">{student.year_level}</Typography></Box>
+            <Box><Typography variant="subtitle2" color="textSecondary">Internship Status</Typography><Chip label={toSentenceCase(student.internship_status)} color={student.internship_status === 'active' ? 'success' : 'default'} /></Box>
+          </Stack>
 
           <Divider sx={{ my: 3 }} />
 
           <Typography variant="h6" gutterBottom>Contact Information</Typography>
-          <Grid container spacing={2}>
+          <Stack spacing={2}>
             {contactFields.map((field) => (
-              <Grid key={field.name} xs={12} md={6}>
+              <Box key={field.name}>
                 <Typography variant="subtitle2" color="textSecondary">
                   {field.label}
                 </Typography>
@@ -97,9 +103,9 @@ export default function StudentProfilePage() {
                 ) : (
                   <Typography variant="body1">{field.value || "N/A"}</Typography>
                 )}
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Stack>
         </CardContent>
       </Card>
     </Box>

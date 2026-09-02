@@ -12,6 +12,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import StudentForm from "./StudentForm";
 import { MODES } from "../form/formConfig";
+import useAuth from "../../../hooks/useAuth";
 
 export default function StudentModal({
   open,
@@ -28,6 +29,7 @@ export default function StudentModal({
   const [mode, setMode] = useState(initialMode);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
+  const { user } = useAuth();
 
   const handleEditBtnPressed = () => setMode(MODES.EDIT);
   const handleCancelBtnPressed = () => {
@@ -39,27 +41,30 @@ export default function StudentModal({
     setIsSaving(true);
     document.getElementById("student-form")?.requestSubmit();
   };
-
-  const handleSubmit = async (data) => {
-    setError(null);
-    try {
-      if (mode === MODES.CREATE) {
-        await onCreate?.(data);
-        onSuccess?.("Student created successfully!");
-      } else {
-        await onUpdate?.({ id: student.id, payload: data });
-        onSuccess?.("Student updated successfully!");
+const handleSubmit = async (data) => {
+  setError(null);
+  try {
+    if (mode === MODES.CREATE) {
+      await onCreate?.(data);
+      onSuccess?.("Student created successfully!");
+    } else {
+      const studentId = student?.id;
+      if (!studentId) {
+        throw new Error("No student record selected for update.");
       }
-      setIsSaving(false);
-      onClose();
-    } catch (submitError) {
-      setIsSaving(false);
-      setError(submitError.response?.data?.message || "Unable to save student.");
+      await onUpdate?.({ id: studentId, payload: data, role: user?.role });
+      onSuccess?.("Student updated successfully!");
     }
-  };
+    setIsSaving(false);
+    onClose();
+  } catch (submitError) {
+    setIsSaving(false);
+    console.error("Full Submit Error:", submitError);
+    setError(submitError.response?.data?.message || submitError.message || "Unable to save student.");
+  }
+};
 
   const canEdit = permissions?.canUpdate;
-  const canCreate = permissions?.canCreate;
 
   return (
     <Dialog
@@ -98,7 +103,7 @@ export default function StudentModal({
           isStudent={isStudent}
           defaultValues={student || {}}
           onSubmit={handleSubmit}
-          onInvalid={(errors) => console.log("FORM VALIDATION ERRORS:", errors)}
+          onInvalid={() => setIsSaving(false)}
         />
       </DialogContent>
 
