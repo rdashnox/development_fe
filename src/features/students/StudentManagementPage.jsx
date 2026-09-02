@@ -22,9 +22,7 @@ export default function StudentManagementPage() {
   
   // Merge student records with user metadata for names
   const mergedStudents = useMemo(() => {
-    console.log("DEBUG - Raw Students:", students);
-    console.log("DEBUG - Raw Users:", userData);
-
+    
     if (!students) return [];
     const studentsArr = Array.isArray(students) ? students : [students];
 
