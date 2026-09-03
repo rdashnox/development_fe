@@ -11,21 +11,30 @@ import "./index.css";
 import App from "./App.jsx";
 import theme from "./theme";
 
-createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <QueryProvider>
-          <App />
-        </QueryProvider>
-        <Toaster
-          position="top-center"
-          toastOptions={{
-            duration: 4000,
-          }}
-        />
-      </ThemeProvider>
-    </BrowserRouter>
-  </StrictMode>,
-);
+async function prepare() {
+  if (import.meta.env.VITE_MOCK === "true") {
+    const { startMockServer } = await import("./mock/index.js");
+    await startMockServer();
+  }
+}
+
+prepare().then(() => {
+  createRoot(document.getElementById("root")).render(
+    <StrictMode>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <QueryProvider>
+            <App />
+          </QueryProvider>
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              duration: 4000,
+            }}
+          />
+        </ThemeProvider>
+      </BrowserRouter>
+    </StrictMode>,
+  );
+});

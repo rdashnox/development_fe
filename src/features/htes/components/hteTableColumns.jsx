@@ -1,76 +1,80 @@
 import { MenuItem } from "@mui/material";
-import BadgeRole from "./BadgeRole";
 import BadgeStatus from "./BadgeStatus";
-import { ROLE_OPTIONS } from "../form/formConfig";
 
 //-----------------
 // HELPERS
 //-----------------
 
-const formatRole = (role) =>
-  ROLE_OPTIONS.find((option) => option.value === role)?.label ?? role;
-
 const formatCellDate = (value) => {
   if (!value && value !== 0) return null;
-  
+
   try {
     const dateObj = new Date(value);
-    
+
     if (isNaN(dateObj.getTime())) return null;
-    
+
     return new Intl.DateTimeFormat("en-US", {
       month: "numeric",
       day: "2-digit",
       year: "numeric",
       timeZone: "UTC",
     }).format(dateObj);
-
   } catch (error) {
     console.error("Date formatting error:", error);
     return null;
   }
 };
 
-
-
 //-----------------
 // MAIN FUNCTION
 //-----------------
-export function createUserTableColumns({ canEdit }) {
+export function createHteTableColumns({ canEdit, supervisorMap = {} }) {
   return [
     {
-      accessorKey: "email",
-      header: "Email",
-      size: 240,
+      accessorKey: "company_name",
+      header: "Company Name",
+      size: 260,
       enableColumnFilter: true,
       enableEditing: false,
     },
     {
-      id: "name",
-      header: "Name",
+      accessorKey: "address",
+      header: "Address",
+      size: 200,
+      enableColumnFilter: true,
+      enableEditing: false,
+    },
+    {
+      accessorKey: "contact_person",
+      header: "Contact Person",
+      size: 200,
+      enableColumnFilter: true,
+      enableEditing: false,
+    },
+    {
+      accessorKey: "contact_email",
+      header: "Contact Email",
       size: 220,
-      accessorFn: (row) =>
-        [row.last_name, row.first_name, row.middle_name, row.suffix]
-          .filter(Boolean)
-          .join(", "),
       enableColumnFilter: true,
       enableEditing: false,
     },
     {
-      accessorKey: "role",
-      header: "Role",
-      size: 190,
-      filterVariant: "select",
-      filterSelectOptions: ROLE_OPTIONS,
-      Cell: ({ cell }) => <BadgeRole value={formatRole(cell.getValue())} />,
-      enableEditing: canEdit,
-      muiEditTextFieldProps: {
-        select: true,
-        children: ROLE_OPTIONS.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        )),
+      accessorKey: "contact_number",
+      header: "Contact Number",
+      size: 160,
+      enableColumnFilter: true,
+      enableEditing: false,
+    },
+    {
+      accessorKey: "supervisor_id",
+      header: "Supervisor",
+      size: 200,
+      enableColumnFilter: true,
+      enableEditing: false,
+      Cell: ({ cell }) => {
+        const id = cell.getValue();
+        if (!id) return "No Supervisor";
+        return supervisorMap[id] ?? id;
       },
     },
     {
@@ -108,4 +112,3 @@ export function createUserTableColumns({ canEdit }) {
     },
   ];
 }
-

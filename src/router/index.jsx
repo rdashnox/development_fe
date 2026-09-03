@@ -12,6 +12,7 @@ import StudentProfilePage from "../features/students/StudentProfilePage";
 
 import Dashboard from "../pages/Dashboard";
 import UserManagementPage from "../features/users/UserManagementPage";
+import HteManagementPage from "../features/htes/HTEManagementPage";
 import AppLayout from "../layouts/AppLayout";
 import AuthGuard from "../guards/AuthGuard";
 import GuestGuard from "../guards/GuestGuard";
@@ -41,6 +42,7 @@ export default function AppRouter() {
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/userandroles" element={<UserManagementPage />} />
+          <Route path="/companies" element={<HteManagementPage />} />
           <Route path="/students" element={<StudentsRoute />} />
           <Route path="/students/me" element={<StudentProfilePage />} />
         </Route>

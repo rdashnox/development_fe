@@ -2,20 +2,19 @@ import {
 	FIELD_RULES,
 	MODES,
 	ROLES,
-	userFormConfig,
+	hteFormConfig as hteFormConfig,
 } from "./form/formConfig";
 
-export function getUserManagementPermissions(role) {
-	const isAdmin = role === ROLES.ADMIN;
+export function getHteManagementPermissions(role) {
+	const isAllowed = role === ROLES.ADMIN || role === ROLES.INTERNSHIP_COORDINATOR;
 
 	return {
-		canView: isAdmin,
-		canCreate: isAdmin,
-		canEdit: isAdmin,
-		canEditRole: isAdmin,
-		canToggleStatus: isAdmin,
-		canBulkEdit: isAdmin,
-		canSelectRows: isAdmin,
+		canView: isAllowed,
+		canCreate: isAllowed,
+		canEdit: isAllowed,
+		canToggleStatus: isAllowed,
+		canBulkEdit: isAllowed,
+		canSelectRows: isAllowed,
 	};
 }
 
@@ -43,17 +42,17 @@ export function canDoOperation(role, mode) {
 	return role === ROLES.ADMIN && (mode === MODES.CREATE || mode === MODES.EDIT);
 }
 
-export function getUserFormPermissions(role, mode) {
+export function getHteFormPermissions(role, mode) {
 	return {
 		getFieldRule: (field) => getFieldRule(field, role, mode),
 		canSubmit: canDoOperation(role, mode),
 	};
 }
 
-export function getVisibleUserFields(role, mode) {
-	return userFormConfig.filter(
+export function getVisibleHteFields(role, mode) {
+	return hteFormConfig.filter(
 		(field) => getFieldRule(field, role, mode) !== FIELD_RULES.HIDDEN,
 	);
 }
 
-export const userPermissions = getUserFormPermissions;
+export const htePermissions = getHteFormPermissions;

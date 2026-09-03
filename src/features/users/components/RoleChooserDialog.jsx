@@ -9,15 +9,7 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { ROLES } from "../form/formConfig";
-
-const roleOptions = [
-  { value: ROLES.ADMIN, label: "Administrator" },
-  { value: ROLES.INTERNSHIP_COORDINATOR, label: "Internship Coordinator" },
-  { value: ROLES.FACULTY_ADVISER, label: "Faculty Adviser" },
-  { value: ROLES.HTE_SUPERVISOR, label: "HTE Supervisor" },
-  { value: ROLES.STUDENT, label: "Student" },
-];
+import { ROLE_OPTIONS } from "../form/formConfig";
 
 export default function RoleChooserDialog({
   open,
@@ -40,7 +32,7 @@ export default function RoleChooserDialog({
             onChange={(event) => onChange(event.target.value)}
             disabled={isLoading}
           >
-            {roleOptions.map((role) => (
+            {ROLE_OPTIONS.map((role) => (
               <MenuItem key={role.value} value={role.value}>
                 {role.label}
               </MenuItem>
