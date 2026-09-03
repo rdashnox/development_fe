@@ -16,6 +16,12 @@ const endpoints = {
     role: (id) => `/users/${id}/role`,
     status: (id) => `/users/${id}/status`,
   },
+
+  students: {
+    list: "/students",
+    me: "/students/me",
+    details: (id) => `/students/${id}`,
+  },
 };
 
 export default Object.freeze(endpoints);

@@ -41,6 +41,13 @@ const menuItems = [
     icon: <BusinessIcon />,
     roles: ["administrator", "internship_coordinator"],
   },
+
+  {
+    label: "Students",
+    path: "/students",
+    icon: <PeopleIcon />,
+    roles: ["administrator", "internship_coordinator", "student"],
+  }
 ];
 
 export default function Sidebar({ role, mobileOpen, onMobileClose }) {

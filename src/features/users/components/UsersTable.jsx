@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import {
   MaterialReactTable,
   useMaterialReactTable,
-} from "@glebcha/material-react-table";
+} from "material-react-table";
 import { Box, Button, CircularProgress } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 
@@ -160,16 +160,6 @@ export default function UsersTable({
         backgroundColor: "background.paper",
       },
     },
-    // muiTopToolbarProps: {
-    //   sx: {
-    //     backgroundColor: "secondary.light",
-    //   },
-    // },
-    // muiBottomToolbarProps: {
-    //   sx: {
-    //     backgroundColor: "secondary.light",
-    //   },
-    // },
     muiTableProps: {
       sx: {
         tableLayout: "fixed",
@@ -180,7 +170,6 @@ export default function UsersTable({
         position: "sticky",
         top: 0,
         zIndex: 2,
-        // backgroundColor: "background.paper",
       },
     },
     muiTableBodyCellProps: {
@@ -228,8 +217,8 @@ export default function UsersTable({
                 await onBulkRoleChange({ ids, role });
                 notify.success("Roles updated successfully.");
               } catch (error) {
-                  console.error("Failed to update roles:", error);
-                  notify.error("Failed to update roles.");
+                console.error("Failed to update roles:", error);
+                notify.error("Failed to update roles.");
               } finally {
                 setPendingAction(null);
               }
@@ -256,10 +245,10 @@ export default function UsersTable({
                 await onBulkStatusChange({ ids, isActive: true });
                 notify.success("Users activated successfully.");
               } catch (error) {
-                  console.error("Failed to activate users:", error);
-                  notify.error(
-                    error.response?.data?.message || "Failed to activate users.",
-                  );
+                console.error("Failed to activate users:", error);
+                notify.error(
+                  error.response?.data?.message || "Failed to activate users.",
+                );
               } finally {
                 setPendingAction(null);
               }
@@ -286,10 +275,10 @@ export default function UsersTable({
                 await onBulkStatusChange({ ids, isActive: false });
                 notify.success("Users deactivated successfully.");
               } catch (error) {
-                  console.error("Failed to deactivate users:", error);
-                  notify.error(
-                    error.response?.data?.message || "Failed to deactivate users.",
-                  );
+                console.error("Failed to deactivate users:", error);
+                notify.error(
+                  error.response?.data?.message || "Failed to deactivate users.",
+                );
               } finally {
                 setPendingAction(null);
               }
