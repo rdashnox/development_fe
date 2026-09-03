@@ -62,6 +62,14 @@ export default function HtesTable({
     editDisplayMode: "row",
     positionActionsColumn: "last",
     positionGlobalFilter: "right",
+    initialState: {
+      columnFiltersOpen: false,
+      pagination: { pageIndex: 0, pageSize: 5 },
+      sorting: [{ id: "created_at", desc: true }],
+      columnPinning: {
+      right: ["mrt-row-actions"],
+      },
+    },
     icons: {
       SaveIcon: (props) =>
         pendingAction ? (
@@ -125,17 +133,11 @@ export default function HtesTable({
           }
         }
       : undefined,
-    initialState: {
-      pagination: { pageIndex: 0, pageSize: 25 },
-      sorting: [{ id: "created_at", desc: true }],
-      showColumnFilters: true,
-    },
     muiTableContainerProps: {
       sx: {
         maxHeight: 600,
         maxWidth: "100%",
         overflowX: "auto",
-        backgroundColor: "background.paper",
       },
     },
     muiTableProps: {
@@ -148,11 +150,6 @@ export default function HtesTable({
         position: "sticky",
         top: 0,
         zIndex: 2,
-      },
-    },
-    muiTableBodyCellProps: {
-      sx: {
-        backgroundColor: "background.paper",
       },
     },
     muiTableBodyRowProps: ({ row }) => ({
@@ -169,7 +166,6 @@ export default function HtesTable({
       },
       sx: {
         cursor: onHteClick ? "pointer" : "default",
-        backgroundColor: "background.paper",
       },
     }),
     renderBottomToolbarCustomActions: ({ table: currentTable }) =>

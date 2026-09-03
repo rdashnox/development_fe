@@ -217,7 +217,6 @@ export default function StudentForm({ mode, defaultValues, onSubmit, onInvalid, 
               <MenuItem value="pending">Pending</MenuItem>
               <MenuItem value="active">Active</MenuItem>
               <MenuItem value="completed">Completed</MenuItem>
-              <MenuItem value="dropped">Dropped</MenuItem>
             </TextField>
           )}
         />

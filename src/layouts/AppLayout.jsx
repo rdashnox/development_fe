@@ -43,7 +43,7 @@ export default function AppLayout() {
           sx={{
             flex: 1,
             minWidth: 0,
-            p: { xs: 2, sm: 3 },
+            p: { xs: 2, sm: 5 },
           }}
         >
           <PasswordChangeGuard>

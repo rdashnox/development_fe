@@ -1,7 +1,6 @@
-import { Alert, Button, CircularProgress } from "@mui/material";
+import { Alert, Button, CircularProgress, Typography } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import CardStat from "../../components/common/CardStat";
-import DarkButton from "../../components/common/ButtonDark";
 import UsersTable from "./components/UsersTable";
 import UserModal from "./components/UserModal";
 import { useUserModalState } from "./hooks/useUserModalState";
@@ -16,7 +15,6 @@ import notify from "../../utils/toast";
 // ============================================
 const styles = {
   container: {
-    background: "#F7F9FB",
     minHeight: "100vh",
   },
   topSection: {
@@ -32,12 +30,12 @@ const styles = {
   },
   cardsSection: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-    gap: "16px",
+    gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr))",
+    gap: 10,
     width: "100%",
   },
   mainSection: {
-    paddingTop: "24px",
+    paddingTop: "43px",
   },
   tableHeader: {
     marginBottom: "16px",
@@ -78,14 +76,17 @@ export default function UserManagementLayout() {
       <div style={styles.topSection}>
         {/* Header: Title + Action Button */}
         <div style={styles.headerSection}>
-          <h4>Active Accounts by Role</h4>
-          <DarkButton
-            icon={<AddIcon />}
+          <Typography variant="h5" fontWeight={600}>
+          Active Accounts by Role
+          </Typography>
+          <Button
+            startIcon={<AddIcon />}
+            variant="contained"
             onClick={() => modalState.open("create")}
             disabled={!permissions.canCreate}
           >
             Add User
-          </DarkButton>
+          </Button>
         </div>
 
         {/* Stats Cards */}
@@ -119,7 +120,9 @@ export default function UserManagementLayout() {
       <div style={styles.mainSection}>
         {/* Table Header */}
         <div style={styles.tableHeader}>
-          <h4>User List</h4>
+          <Typography variant="h5" fontWeight={600}>
+          User List
+          </Typography>
         </div>
 
         {/* Data Table */}

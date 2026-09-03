@@ -1,7 +1,6 @@
-import { Alert, Button, CircularProgress } from "@mui/material";
+import { Alert, Button, CircularProgress, Typography } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import CardStat from "../../components/common/CardStat";
-import DarkButton from "../../components/common/ButtonDark";
 import HteTable from "./components/HteTable";
 import HteModal from "./components/HteModal";
 import { useHteModalState } from "./hooks/useHteModalState";
@@ -17,11 +16,7 @@ import notify from "../../utils/toast";
 // ============================================
 const styles = {
   container: {
-    background: "#F7F9FB",
     minHeight: "100vh",
-  },
-  topSection: {
-    padding: "0px",
   },
   headerSection: {
     display: "flex",
@@ -38,7 +33,7 @@ const styles = {
     width: "100%",
   },
   mainSection: {
-    paddingTop: "24px",
+    paddingTop: "10px",
   },
   tableHeader: {
     marginBottom: "16px",
@@ -65,7 +60,7 @@ export default function HteManagementLayout() {
     enabled: permissions.canView,
   });
 
- // Supervisor Mapping Block
+  // Supervisor Mapping Block
   const { data: allUsers = [] } = useUsers({
     enabled: permissions.canView,
   });
@@ -96,22 +91,22 @@ export default function HteManagementLayout() {
       <div style={styles.topSection}>
         {/* Header: Title + Action Button */}
         <div style={styles.headerSection}>
-          <h4>Host Training Establishments (HTE) Overview</h4>
-          <DarkButton
-            icon={<AddIcon />}
+          <Typography variant="h5" fontWeight={600}>
+          Host Training Establishments (HTE)
+          </Typography>
+          <Button
+            startIcon={<AddIcon />}
+            variant="contained"
             onClick={() => modalState.open("create")}
             disabled={!permissions.canCreate}
           >
             Register HTE
-          </DarkButton>
+          </Button>
         </div>
 
         {/* Stats Cards */}
         <div style={styles.cardsSection}>
-          <CardStat
-            title="Total HTE Partners"
-            value={hteData.length}
-          />
+          <CardStat title="Total HTE Partners" value={hteData.length} />
           <CardStat
             title="Active HTE Partners"
             value={hteData.filter((u) => u.is_active === true).length}
@@ -123,7 +118,6 @@ export default function HteManagementLayout() {
       <div style={styles.mainSection}>
         {/* Table Header */}
         <div style={styles.tableHeader}>
-          <h4>HTE List</h4>
         </div>
 
         {/* Data Table */}
@@ -133,7 +127,13 @@ export default function HteManagementLayout() {
               You do not have permission to view HTEs.
             </Alert>
           ) : isLoading ? (
-            <div style={{ display: "flex", justifyContent: "center", padding: "32px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                padding: "32px",
+              }}
+            >
               <CircularProgress size={28} />
             </div>
           ) : isError ? (
@@ -173,9 +173,7 @@ export default function HteManagementLayout() {
               onSupervisorChange={updateHteSupervisor.mutateAsync}
               onStatusChange={updateStatus.mutateAsync}
               onBulkStatusChange={bulkUpdateStatus.mutateAsync}
-              onHteClick={(selectedHte) =>
-                modalState.open("view", selectedHte)
-              }
+              onHteClick={(selectedHte) => modalState.open("view", selectedHte)}
             />
           )}
         </div>

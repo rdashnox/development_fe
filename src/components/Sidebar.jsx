@@ -8,9 +8,10 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PeopleIcon from "@mui/icons-material/People";
-import BusinessIcon from "@mui/icons-material/Business";
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
+import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
+import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 
 import { Link } from "react-router-dom";
 
@@ -18,7 +19,7 @@ const menuItems = [
   {
     label: "Dashboard",
     path: "/dashboard",
-    icon: <DashboardIcon />,
+    icon: <DashboardOutlinedIcon />,
     roles: [
       "administrator",
       "internship_coordinator",
@@ -31,23 +32,23 @@ const menuItems = [
   {
     label: "User & Roles",
     path: "/userandroles",
-    icon: <PeopleIcon />,
+    icon: <ManageAccountsOutlinedIcon />,
     roles: ["administrator"],
   },
 
   {
     label: "Companies",
     path: "/companies",
-    icon: <BusinessIcon />,
+    icon: <BusinessOutlinedIcon />,
     roles: ["administrator", "internship_coordinator"],
   },
 
   {
     label: "Students",
     path: "/students",
-    icon: <PeopleIcon />,
+    icon: <SchoolOutlinedIcon />,
     roles: ["administrator", "internship_coordinator", "student"],
-  }
+  },
 ];
 
 export default function Sidebar({ role, mobileOpen, onMobileClose }) {
@@ -56,13 +57,13 @@ export default function Sidebar({ role, mobileOpen, onMobileClose }) {
   const navigation = (
     <Box
       sx={{
-        width: { xs: 280, sm: 220, md: 260 },
+        width: { xs: 20, sm: 220, md: 230 },
         flexShrink: 0,
         alignSelf: "stretch",
         borderRight: 1,
         borderColor: "divider",
-        bgcolor: "background.paper",
         height: "100%",
+        backgroundColor: "background.accent",
       }}
     >
       <List>
@@ -73,7 +74,9 @@ export default function Sidebar({ role, mobileOpen, onMobileClose }) {
             to={item.path}
             onClick={onMobileClose}
           >
-            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemIcon sx={{ color: "text.secondary" }}>
+              {item.icon}
+            </ListItemIcon>
 
             <ListItemText primary={item.label} />
           </ListItemButton>
