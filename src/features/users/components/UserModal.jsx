@@ -34,6 +34,7 @@ export default function UserModal({
   const defaultValues = user
     ? {
         ...user,
+
         role: user.role ?? "",
         first_name: user.first_name ?? user.firstName ?? "",
         middle_name: user.middle_name ?? user.middleName ?? "",

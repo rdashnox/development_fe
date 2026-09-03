@@ -22,6 +22,10 @@ const endpoints = {
     details: (id) => `/htes/${id}`,
     status: (id) => `/htes/${id}/status`,
     supervisor: (id) => `/htes/${id}/supervisor`,
+  students: {
+    list: "/students",
+    me: "/students/me",
+    details: (id) => `/students/${id}`,
   },
 };
 

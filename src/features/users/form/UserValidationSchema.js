@@ -1,5 +1,6 @@
-import { z } from "zod";
-import { MODES } from "./formConfig";
+// userValidationSchema.js
+import * as yup from "yup";
+import {MODES} from "./formConfig"
 
 const roleSchema = [
   "administrator",
