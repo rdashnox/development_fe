@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import {
   MaterialReactTable,
   useMaterialReactTable,
-} from "material-react-table";
+} from "@glebcha/material-react-table";
 import { Box, Button, CircularProgress } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 

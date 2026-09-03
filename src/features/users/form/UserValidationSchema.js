@@ -1,5 +1,5 @@
 // userValidationSchema.js
-import * as yup from "yup";
+import { z } from "zod";
 import {MODES} from "./formConfig"
 
 const roleSchema = [

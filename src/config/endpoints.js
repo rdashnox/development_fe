@@ -17,15 +17,17 @@ const endpoints = {
     status: (id) => `/users/${id}/status`,
   },
 
+  students: {
+    list: "/students",
+    me: "/students/me",
+    details: (id) => `/students/${id}`,
+  },
+
   htes: {
     list: "/htes",
     details: (id) => `/htes/${id}`,
     status: (id) => `/htes/${id}/status`,
     supervisor: (id) => `/htes/${id}/supervisor`,
-  students: {
-    list: "/students",
-    me: "/students/me",
-    details: (id) => `/students/${id}`,
   },
 };
 
