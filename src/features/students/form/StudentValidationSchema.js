@@ -5,10 +5,6 @@ const phoneRegex = /^09\d{9}$/;
 
 export const StudentValidationSchema = z.object({
   userId: z.string().min(1, "User ID is required"),
-  email: z.string().email("Invalid email address"),
-  firstName: z.string().min(1, "First Name is required"),
-  middleName: z.string().optional().nullable(),
-  lastName: z.string().min(1, "Last Name is required"),
   studentNumber: z.string().min(5, "Student ID must be at least 5 characters").max(20, "Student ID too long"),
   program: z.string().min(2, "Program must be at least 2 characters").max(100, "Program too long"),
   yearLevel: z.coerce.number().min(1, "Year Level must be at least 1").max(5, "Year Level must be at most 5"),

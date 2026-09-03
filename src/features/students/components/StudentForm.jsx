@@ -91,11 +91,17 @@ export default function StudentForm({ mode, defaultValues, onSubmit, onInvalid, 
                 helperText={errors.userId?.message}
                 disabled={isView || isStudent}
               >
-                {availableUsers.map((user) => (
-                  <MenuItem key={user.id} value={user.id}>
-                    {user.first_name} {user.last_name} ({user.email})
-                  </MenuItem>
-                ))}
+                {availableUsers.length === 0 ? (
+                <MenuItem disabled value="">
+                  No available students
+                </MenuItem>
+                ) : (
+                  availableUsers.map((user) => (
+                    <MenuItem key={user.id} value={user.id}>
+                      {user.first_name} {user.last_name} ({user.email})
+                    </MenuItem>
+                  ))
+                )}
               </TextField>
             )}
           />
@@ -106,34 +112,39 @@ export default function StudentForm({ mode, defaultValues, onSubmit, onInvalid, 
                 disabled={true} // ID cannot change in EDIT/VIEW
             />
         )}
-        <TextField
-          label="Email Address"
-          {...register("email")}
-          error={!!errors.email}
-          helperText={errors.email?.message}
-          disabled={isView || isStudent} 
-        />
-        <TextField
-          label="First Name"
-          {...register("firstName")}
-          error={!!errors.firstName}
-          helperText={errors.firstName?.message}
-          disabled={isView || isStudent}
-        />
-        <TextField
-          label="Middle Name"
-          {...register("middleName")}
-          error={!!errors.middleName}
-          helperText={errors.middleName?.message}
-          disabled={isView || isStudent}
-        />
-        <TextField
-          label="Last Name"
-          {...register("lastName")}
-          error={!!errors.lastName}
-          helperText={errors.lastName?.message}
-          disabled={isView || isStudent}
-        />
+        {!isCreate && (
+          <>
+            <TextField
+              label="Email Address"
+              {...register("email")}
+              error={!!errors.email}
+              helperText={errors.email?.message}
+              disabled
+            />
+            <TextField
+              label="First Name"
+              {...register("firstName")}
+              error={!!errors.firstName}
+              helperText={errors.firstName?.message}
+              disabled
+            />
+            <TextField
+              label="Middle Name"
+              {...register("middleName")}
+              error={!!errors.middleName}
+              helperText={errors.middleName?.message}
+              disabled
+            />
+            <TextField
+              label="Last Name"
+              {...register("lastName")}
+              error={!!errors.lastName}
+              helperText={errors.lastName?.message}
+              disabled
+            />
+          </>
+        )}
+        
         <TextField
           label="Student ID"
           {...register("studentNumber")}

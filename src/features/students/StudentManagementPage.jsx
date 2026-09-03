@@ -82,7 +82,11 @@ export default function StudentManagementPage() {
         onCreate={onCreate.mutateAsync}
         onUpdate={onUpdate.mutateAsync}
         isStudent={false}
-        availableUsers={userData.filter(u => !mergedStudents.some(s => s.userId === u.id))}
+        availableUsers={userData.filter(
+          (u) =>
+            u.role === "student" &&
+            !mergedStudents.some((s) => s.userId === u.id),
+        )}
       />
     </Box>
   );
