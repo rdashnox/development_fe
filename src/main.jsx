@@ -12,9 +12,21 @@ import App from "./App.jsx";
 import theme from "./theme";
 
 async function prepare() {
-  if (import.meta.env.VITE_MOCK === "true") {
-    const { startMockServer } = await import("./mock/index.js");
-    await startMockServer();
+  if (import.meta.env.VITE_MOCK !== "true") return;
+
+  try {
+    const mockModulePath = "./mock/index.js";
+    const { startMockServer } = await import(
+      /* @vite-ignore */ mockModulePath
+    );
+
+    if (typeof startMockServer === "function") {
+      await startMockServer();
+    } else {
+      console.warn("Mock module does not export startMockServer.");
+    }
+  } catch (error) {
+    console.warn("Mock server unavailable; continuing without mocks.", error);
   }
 }
 
