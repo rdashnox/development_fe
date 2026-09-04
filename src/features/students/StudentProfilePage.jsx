@@ -65,7 +65,7 @@ export default function StudentProfilePage() {
   };
 
   return (
-    <Box sx={{ p: 3, background: "#F7F9FB", minHeight: "100vh" }}>
+    <Box sx={{ p: 3, bgcolor: "background.default", minHeight: "100vh" }}>
       <Card sx={{ maxWidth: 800, mx: 'auto', p: 2 }}>
         <CardContent>
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>

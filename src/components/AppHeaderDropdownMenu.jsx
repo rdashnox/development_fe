@@ -1,10 +1,12 @@
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem, Divider, Typography } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useState } from "react";
+import { useThemeContext } from "../providers/ThemeContext";
 
 export function HeaderDropdownMenu({ onLogout, isLoading }) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const { mode, toggleTheme } = useThemeContext();
 
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -45,10 +47,21 @@ export function HeaderDropdownMenu({ onLogout, isLoading }) {
           },
         }}
       >
-        <MenuItem onClick={handleLogout}  sx={{ 
-    gap: 1,  
-  }}>
-        <LogoutOutlinedIcon/>
+        <Typography variant="overline" sx={{ px: 2, display: "block", color: "text.secondary" }}>
+          Theme
+        </Typography>
+        {["light", "dark", "system"].map((m) => (
+          <MenuItem 
+            key={m} 
+            onClick={() => toggleTheme(m)} 
+            selected={mode === m}
+          >
+            {m.charAt(0).toUpperCase() + m.slice(1)}
+          </MenuItem>
+        ))}
+        <Divider />
+        <MenuItem onClick={handleLogout} sx={{ gap: 1 }}>
+          <LogoutOutlinedIcon />
           Logout
         </MenuItem>
       </Menu>
